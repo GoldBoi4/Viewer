@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Quick Register</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    body {
+      background: url('https://github.com/GoldBoi4/Viewer/blob/main/upscalemedia-transformed.jpeg?raw=true') no-repeat center center;
+      background-size: cover;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .container {
+      width: 90%;
+      max-width: 350px;
+      padding: 20px;
+      background: rgba(255, 255, 255, 0.15);
+      backdrop-filter: blur(10px);
+      border-radius: 12px;
+      box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.2);
+      text-align: center;
+      color: white;
+    }
+
+    input, button {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+      border-radius: 5px;
+      border: none;
+      outline: none;
+    }
+
+    button {
+      background: orange;
+      color: white;
+      font-weight: bold;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    button:hover {
+      background: #e68900;
+      transform: scale(1.05);
+    }
+
+    .success-message, .qr-code {
+      display: none;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 80%;
+      max-width: 450px;
+      padding: 20px;
+      background: rgba(0, 0, 0, 0.8);
+      color: #fff;
+      text-align: center;
+      border-radius: 12px;
+      box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.5);
+      animation: fadeIn 1.5s ease-in-out;
+    }
+
+    .regards {
+      font-size: 14px;
+      font-weight: bold;
+      text-align: center;
+      color: #fff;
+      margin-top: 10px;
+    }
+
+    .qr-code img {
+      width: 80%;
+      max-width: 300px;
+      background: transparent; /* Makes it blend smoothly */
+      border-radius: 12px;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translate(-50%, -55%);
+      }
+      to {
+        opacity: 1;
+        transform: translate(-50%, -50%);
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container" id="formContainer">
+    <h2>Quick Sign-Up</h2>
+    <form id="form">
+      <input type="text" name="Name" placeholder="Name" required>
+      <input type="tel" name="Contact" placeholder="Mobile Number" pattern="[0-9]{10}" required>
+      <button type="submit">Submit</button>
+    </form>        
+  </div>
+
+  <div class="success-message" id="successMessage">
+    <p>YOUR BOOKING HAS BEEN CONFIRMED</p>
+    <p>SEE YOU IN THE ARTISTIC EVENING</p>
+    <p class="regards">REGARDS<br>TEAM<br>KARMAKUNAALBHARDWAJ</p>
+  </div>
+
+  <div class="qr-code" id="qrCode">
+    <img src="https://github.com/GoldBoi4/Viewer/blob/main/299%20SCAN%20HERE%20TO%20BUY.png?raw=true" alt="Scan to Buy">
+  </div>
+
+  <script>
+    document.getElementById("form").addEventListener("submit", function(event) {
+      event.preventDefault();
+
+      const formData = new FormData(event.target);
+      const url = "https://script.google.com/macros/s/AKfycbw1oF-kr_hYWxVcCZ3RuNd8OAMqhMuBeNBw1fCGHBNkKY2fQ3je04ZEeFph2wRs61lwLg/exec";
+
+      fetch(url, {
+        method: "POST",
+        body: formData
+      })
+      .then(response => response.text())
+      .then(data => {
+        document.getElementById("formContainer").style.display = "none";
+        document.getElementById("successMessage").style.display = "block";
+
+        setTimeout(() => {
+          document.getElementById("successMessage").style.display = "none";
+          document.getElementById("qrCode").style.display = "block";
+        }, 5000);
+      })
+      .catch(error => alert("Error: " + error));
+    });
+  </script>
+</body>
+</html>
